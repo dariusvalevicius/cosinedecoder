@@ -54,7 +54,8 @@ class CosineRegressor(RegressorMixin, BaseEstimator):
     
 class CosineClassifier(ClassifierMixin, BaseEstimator):
     '''
-    This estimator takes matrix X[n_samples, n_features] and vector Y[n_samples, n_classes] as input.
+    This estimator takes matrix X[n_samples, n_features] and vector y[n_samples,] for the single-class case,
+    or matrix Y[n_samples, n_classes] for the multiclass case, as input.
     The coefficients are calculated as the Pearson correlation between y and every feature of X.
     Predictions are made using the normalized dot product (cosine similarity) between the coefficient matrix and a vector x.
 
