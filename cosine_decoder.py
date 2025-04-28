@@ -19,10 +19,12 @@ class CosineRegressor(RegressorMixin, BaseEstimator):
         self.X_ = X
         self.y_ = y
 
+        epsilon = 1e-10  # or smaller if needed
+
         y_mc = y - np.mean(y)
         X_mc = X - np.mean(X, axis=0, keepdims=True)    
-        self.coef_ = np.dot(y_mc / np.linalg.norm(y_mc),
-                            X_mc / np.linalg.norm(X_mc, axis=0, keepdims=True))
+        self.coef_ = np.dot(y_mc / np.linalg.norm(y_mc + epsilon),
+                            X_mc / np.linalg.norm(X_mc + epsilon, axis=0, keepdims=True))
 
         if self.transform_output:
             ## Get slope and intercept to linearly map cosine similarity to range of y
@@ -80,8 +82,11 @@ class CosineClassifier(ClassifierMixin, BaseEstimator):
 
         y_mc = y_wide - np.mean(y_wide, axis=0, keepdims=True)
         X_mc = X - np.mean(X, axis=0, keepdims=True)
-        self.coef_ = np.dot((X_mc / np.linalg.norm(X_mc, axis=0, keepdims=True)).T,
-                             y_mc / np.linalg.norm(y_mc, axis=0, keepdims=True))
+
+        epsilon = 1e-10  # or smaller if needed
+   
+        self.coef_ = np.dot(y_mc / np.linalg.norm(y_mc + epsilon, axis=0, keepdims=True).T,
+                            X_mc / np.linalg.norm(X_mc + epsilon, axis=0, keepdims=True))
 
         return self
     
