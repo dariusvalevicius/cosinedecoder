@@ -85,8 +85,8 @@ class CosineClassifier(ClassifierMixin, BaseEstimator):
 
         epsilon = 1e-10  # or smaller if needed
    
-        self.coef_ = np.dot(y_mc / np.linalg.norm(y_mc + epsilon, axis=0, keepdims=True).T,
-                            X_mc / np.linalg.norm(X_mc + epsilon, axis=0, keepdims=True))
+        self.coef_ = np.dot((X_mc / np.linalg.norm(X_mc + epsilon, axis=0, keepdims=True)).T,
+                             y_mc / np.linalg.norm(y_mc + epsilon, axis=0, keepdims=True))
 
         return self
     
